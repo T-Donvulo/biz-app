@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import localData from './api/localData';
+//import localStorage from './api/localData'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const [shoots, setShoots] = useState(localData.getAllShoots());
+
+const testAdd = () => {
+const newShoots = localData.addShoot({
+
+    name: 'dfghhmj',
+    surname: 'fgthjkk', 
+    date: 'fghgjhj', 
+    location: 'gfhdjkgj', 
+    price: 'fhghj', 
+    expenses: 'edfgkhj',
+  })
+  setShoots(newShoots);
+};
+
+const testUpdate = (id) => {
+  const newShoots =  localData.updateShoot(id, "name", "Thato");
+  setShoots(newShoots);
+};
+
+const testDelete = (id) => {
+const newShoots =  localData.removeShoot(id);
+setShoots(newShoots)
+};
+
+
+  return(
+    <div>
+      <button onClick = {testAdd}>ADD Shoot</button>     
+      <div>
+      {shoots.map(({ name, id }) => (
+      <div>{name} <button onClick = { () => testUpdate(id)}>Update Shoot</button>
+      <button onClick = {() => testDelete(id)}>Delete Shoot</button>
+      </div>
+      ))}</div>
+
+      </div>
   );
 }
-
 export default App;
